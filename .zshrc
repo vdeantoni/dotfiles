@@ -202,12 +202,5 @@ export BAT_THEME="Monokai Extended"
 # Load ssh identities
 zstyle :omz:plugins:ssh-agent identities id_rsa personal_id_rsa
 
-# League Client setup
-PLUGINATOR_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/pluginator/bin;
-CT_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/client-tools/bin;
-LCP_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/lcpuppeteer/bin;
-NODE_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/../../Tools/Ext/Node/12.13.1/mac/bin;
-YARN_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/../../Tools/Ext/Yarn;
-export PATH=$PLUGINATOR_BIN:$CT_BIN:$LCP_BIN:$NODE_BIN:$YARN_BIN:$PATH
-
+source ~/.riot
 
