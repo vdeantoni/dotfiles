@@ -43,7 +43,7 @@ source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 # export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-DISABLE_MAGIC_FUNCTIONS=true
+DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -75,6 +75,7 @@ COMPLETION_WAITING_DOTS="true"
 
 # ZSH_DISABLE_COMPFIX="true"
 
+# Have alias-finder run automatically before each command.
 ZSH_ALIAS_FINDER_AUTOMATIC="true"
 
 # Which plugins would you like to load?
@@ -86,121 +87,29 @@ plugins=(git npm npx node osx brew docker docker-compose web-search vscode ember
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-setopt extended_glob
-
-export P4CONFIG=~/p4/p4config.txt
-
-fpath=(/usr/local/share/zsh-completions $fpath)
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-# else
-#   export EDITOR='vim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-alias zshconfig="code ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
-alias htop="sudo htop -t"
-
-alias gpr="ggpur"
-alias gs="gst"
-alias pe="path-extractor"
-
-cdwhich() {
-  cd ${$(which $1):a:h}
-}
-
-pl() {
-  set -x
-  pluginator $1 rcp-fe-lol-$2 --env ci $@[3,-1]
-  set +x
-}
-
-loop() {
-  for x in {1..$1}; do $@[2,-1]; done
-}
-alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
-alias reviews="open_command 'https://reviews.riotgames.com/cru?filter=outForReview'"
-
-# Activate plugins
+# Activate zsh plugins
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-
-# Map up and down arrow correctly
-if [ "${machine}" = "Mac" ]
-then
-  UPKEY='\e[A'
-  DOWNKEY='\e[B'
-else
-  UPKEY="^[OA"
-  DOWNKEY="^[OB"
-fi
-
-bindkey "$UPKEY" history-substring-search-up
-bindkey "$DOWNKEY" history-substring-search-down
-
-# Jira config
-export JIRA_URL="https://jira.riotgames.com"
-export JIRA_NAME="vdeantoni"
-export JIRA_PREFIX="LCT"
+fpath=(/usr/local/share/zsh-completions $fpath)
 
 # iTerm2 Shell integration
 source ~/.iterm2_shell_integration.zsh
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
- unalias fd
- alias fd='fd --hidden'
-export FZF_DEFAULT_OPTS='--layout=reverse --inline-info'
-export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git --exclude node_modules'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --type f"
-export FZF_CTRL_T_OPTS="--preview '(bat --style-numbers {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+# User configuration
+source ~/.variables
+source ~/.inputrc
+source ~/.alias
 
-
-#   - CTRL-O to open with `open` command,
-#   - CTRL-E or Enter key to open with the $EDITOR
-fo() (
-  IFS=$'\n' out=("$(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e)")
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
-  if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
-  fi
-)
-
-bindkey "^g" fzf-cd-widget
-
-unalias z 2> /dev/null
-z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
-}
-
-export BAT_PAGER="less -R"
-export BAT_THEME="Monokai Extended"
+source ~/.riot
 
 # Load ssh identities
 zstyle :omz:plugins:ssh-agent identities id_rsa personal_id_rsa
 
-source ~/.riot
+# Zsh options
 
+# Set extended glob
+setopt extended_glob

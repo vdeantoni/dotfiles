@@ -1,0 +1,25 @@
+alias zshconfig="code ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
+alias htop="sudo htop -t"
+
+alias gpr="ggpur"
+alias gs="gst"
+alias pe="path-extractor"
+
+cdwhich() {
+    cd ${$(which $1):a:h}
+}
+
+pl() {
+    set -x
+    pluginator $1 rcp-fe-lol-$2 --env ci $@[3,-1]
+    set +x
+}
+
+loop() {
+    for x in {1..$1}; do $@[2,-1]; done
+}
+alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
+
+unalias fd
+alias fd='fd --hidden'

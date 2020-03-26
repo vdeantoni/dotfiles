@@ -1,0 +1,14 @@
+# Map up and down arrow correctly
+if [ "${machine}" = "Mac" ]
+then
+  UPKEY='\e[A'
+  DOWNKEY='\e[B'
+else
+  UPKEY="^[OA"
+  DOWNKEY="^[OB"
+fi
+
+bindkey "$UPKEY" history-substring-search-up
+bindkey "$DOWNKEY" history-substring-search-down
+
+bindkey "^g" fzf-cd-widget
