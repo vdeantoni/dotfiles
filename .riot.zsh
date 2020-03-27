@@ -5,9 +5,10 @@ export P4CONFIG=~/p4/p4config.txt
 PLUGINATOR_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/pluginator/bin;
 CT_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/client-tools/bin;
 LCP_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/lcpuppeteer/bin;
-NODE_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/../../Tools/Ext/Node/12.13.1/mac/bin;
-YARN_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/../../Tools/Ext/Yarn;
-export PATH=$PLUGINATOR_BIN:$CT_BIN:$LCP_BIN:$NODE_BIN:$YARN_BIN:$PATH
+# NODE_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/../../Tools/Ext/Node/12.13.1/mac/bin;
+# YARN_BIN=/Users/vdeantoni/p4/depot/LoL/__MAIN__/DevRoot/Client/tools/../../Tools/Ext/Yarn;
+# export PATH=$PLUGINATOR_BIN:$CT_BIN:$LCP_BIN:$NODE_BIN:$YARN_BIN:$PATH
+export PATH=$PLUGINATOR_BIN:$CT_BIN:$LCP_BIN:$PATH
 
 # Alias
 alias reviews="open_command 'https://reviews.riotgames.com/cru?filter=outForReview'"

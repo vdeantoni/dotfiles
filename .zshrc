@@ -113,12 +113,14 @@ plugins=(
     web-search
     z
     zsh_reload
+
+    nodenv
 )
 
 source $ZSH/oh-my-zsh.sh
 
 # User variables
-source ~/.variables
+source ~/.variables.zsh
 
 # Activate zsh plugins
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -133,14 +135,29 @@ source ~/.fzf.zsh
 source ~/.iterm2_shell_integration.zsh
 
 # User configuration
-source ~/.inputrc
-source ~/.alias
-source ~/.riot
+source ~/.alias.zsh
+source ~/.riot.zsh
 
 # Load ssh identities
 zstyle :omz:plugins:ssh-agent identities id_rsa personal_id_rsa
 
 # Zsh options
-
 # Set extended glob
 setopt extended_glob
+
+# Key Bindings
+# Map up and down arrow correctly
+if [ "${machine}" = "Mac" ]
+then
+  UPKEY='\e[A'
+  DOWNKEY='\e[B'
+else
+  UPKEY="^[OA"
+  DOWNKEY="^[OB"
+fi
+
+bindkey "$UPKEY" history-substring-search-up
+bindkey "$DOWNKEY" history-substring-search-down
+
+# Workaround for Alt-C fzf keybinding
+bindkey "ç" fzf-cd-widget
