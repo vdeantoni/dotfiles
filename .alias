@@ -1,5 +1,5 @@
 alias zshconfig="code ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
+
 alias htop="sudo htop -t"
 
 alias gpr="ggpur"
@@ -22,4 +22,3 @@ loop() {
 alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
 
 unalias fd
-alias fd='fd --hidden'

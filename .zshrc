@@ -87,23 +87,24 @@ plugins=(git npm npx node osx brew docker docker-compose web-search vscode ember
 
 source $ZSH/oh-my-zsh.sh
 
+# User variables
+source ~/.variables
+
 # Activate zsh plugins
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 fpath=(/usr/local/share/zsh-completions $fpath)
 
+source ~/.p10k.zsh
+source ~/.fzf.zsh
+
 # iTerm2 Shell integration
 source ~/.iterm2_shell_integration.zsh
 
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # User configuration
-source ~/.variables
 source ~/.inputrc
 source ~/.alias
-
 source ~/.riot
 
 # Load ssh identities

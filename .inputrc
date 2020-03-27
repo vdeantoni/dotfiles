@@ -11,4 +11,5 @@ fi
 bindkey "$UPKEY" history-substring-search-up
 bindkey "$DOWNKEY" history-substring-search-down
 
-bindkey "^g" fzf-cd-widget
+# Workaround for Alt-C fzf keybinding
+bindkey "ç" fzf-cd-widget
