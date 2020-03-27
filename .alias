@@ -22,3 +22,7 @@ loop() {
 alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
 
 unalias fd
+
+p10k-colors() {
+    for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done
+}

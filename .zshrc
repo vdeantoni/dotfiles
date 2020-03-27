@@ -83,7 +83,37 @@ ZSH_ALIAS_FINDER_AUTOMATIC="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git npm npx node osx brew docker docker-compose web-search vscode ember-cli vi-mode z common-aliases alias-finder gatsby ssh-agent urltools jsontools jira fd extract encode64 dotenv copyfile copydir ripgrep)
+plugins=(
+    alias-finder
+    brew
+    common-aliases
+    copydir
+    copyfile
+    docker
+    docker-compose
+    dotenv
+    ember-cli
+    encode64
+    extract
+    fd
+    fzf
+    gatsby
+    git
+    jira
+    jsontools
+    node
+    npm
+    npx
+    osx
+    ripgrep
+    ssh-agent
+    urltools
+    vi-mode
+    vscode
+    web-search
+    z
+    zsh_reload
+)
 
 source $ZSH/oh-my-zsh.sh
 
