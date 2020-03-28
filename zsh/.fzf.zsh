@@ -6,92 +6,13 @@ fi
 
 # Auto-completion
 # ---------------
-export FZF_COMPLETION_TRIGGER='zz'
 [[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
 
-# Custom variables
-VIEW_WITH_FALLBACK='
-([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) ||
-([[ -d {} ]] && tree -C {}) ||
-echo {}'
-
-# User settings
-FZF_POINTER="--prompt='~ ' --pointer='▶' --marker='✗'"
-FZF_MARGIN="--margin 0,0,0,0"
-
-# --color='fg:0'
-# --color='bg:0'
-# --color='fg+:0'
-# --color='bg+:0'
-# --color='preview-fg:0'
-# --color='preview-bg:0'
-# --color='hl:0'
-# --color='hl+:0'
-# --color='gutter:0'
-# --color='info:0'
-# --color='border:0'
-# --color='prompt:0'
-# --color='pointer:0'
-# --color='marker:0'
-# --color='header:0'
-FZF_COLOR="
---color='hl:148'
---color='hl+:154'
---color='pointer:032'
---color='marker:010'
---color='bg+:237'
---color='gutter:008'
-"
-
-FZF_BIND_CHANGE="--bind 'change:top'"
-FZF_BIND_SORT="--bind 'f2:toggle-sort'"
-FZF_BIND_SELECT_ALL="--bind 'ctrl-a:select-all'"
-FZF_BIND_DESELECT_ALL="--bind 'ctrl-s:deselect-all'"
-FZF_BIND_COPY="--bind 'ctrl-y:execute-silent(echo {+} | pbcopy)'"
-FZF_BIND_PEEK="--bind 'ctrl-space:execute($VIEW_WITH_FALLBACK)'"
-FZF_BIND_OPEN="--bind 'ctrl-e:execute(echo {+} | xargs -o $EDITOR),ctrl-v:execute(code {+}),ctrl-o:execute(open_command {+})"
-FZF_BIND_DELETE="--bind 'ctrl-x:execute(rm -i {+})+abort'"
-FZF_BIND_TOGGLE_PREVIEW="--bind '?:toggle-preview'"
-FZF_BIND_TOGGLE_PREVIEW_WRAP="--bind 'f3:toggle-preview-wrap'"
-FZF_BIND_SCROLL_UP_PREVIEW="--bind 'alt-up:preview-up'"
-FZF_BIND_SCROLL_DOWN_PREVIEW="--bind 'alt-down:preview-down'"
-
-FZF_PREVIEW="--preview '($VIEW_WITH_FALLBACK) 2> /dev/null | head -200'"
-FZF_PREVIEW_WINDOW_HIDDEN="--preview-window=:hidden"
-FZF_PREVIEW_WINDOW="--preview-window=right:wrap"
-
-export FZF_DEFAULT_COMMAND="fd $FZF_FD_OPTS"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
-
-export FZF_DEFAULT_OPTS="
---no-mouse
---layout=reverse
--0
---info=inline
---multi
---height=80%
-$FZF_POINTER
-$FZF_MARGIN
-$FZF_COLOR
-$FZF_BIND_CHANGE
-$FZF_BIND_SORT
-$FZF_BIND_SELECT_ALL
-$FZF_BIND_DESELECT_ALL
-$FZF_BIND_COPY
-$FZF_BIND_PEEK
-$FZF_BIND_OPEN
-$FZF_BIND_DELETE
-$FZF_BIND_TOGGLE_PREVIEW
-$FZF_BIND_TOGGLE_PREVIEW_WRAP
-$FZF_BIND_SCROLL_UP_PREVIEW
-$FZF_BIND_SCROLL_DOWN_PREVIEW
-$FZF_PREVIEW
-$FZF_PREVIEW_WINDOW_HIDDEN
-"
-
-export FZF_ALT_C_OPTS="--multi=0 $FZF_PREVIEW_WINDOW"
-export FZF_CTRL_T_OPTS="$FZF_PREVIEW_WINDOW"
+# Key bindings
+# ------------
+source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+# Workaround for Alt-C
+bindkey "ç" fzf-cd-widget
 
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.

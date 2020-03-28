@@ -78,18 +78,10 @@ COMPLETION_WAITING_DOTS="true"
 # Have alias-finder run automatically before each command.
 ZSH_ALIAS_FINDER_AUTOMATIC="true"
 
+# User variables
+source ~/.variables.zsh
+
 # Which plugins would you like to load?
-# Activate zsh plugins
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-
-source ~/.p10k.zsh
-source ~/.fzf.zsh
-
-# iTerm2 Shell integration
-source ~/.iterm2_shell_integration.zsh
-
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -109,7 +101,6 @@ plugins=(
     encode64
     extract
     fd
-    fzf
     gatsby
     git
     jira
@@ -125,7 +116,6 @@ plugins=(
     vscode
     web-search
     z
-    zsh-interactive-cd
     zsh_reload
 
     nodenv
@@ -134,15 +124,19 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# Activate zsh plugins
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+source ~/.p10k.zsh
+source ~/.fzf.zsh
+
+# iTerm2 Shell integration
+source ~/.iterm2_shell_integration.zsh
+
 # zsh completions
 fpath=(/usr/local/share/zsh-completions $fpath)
-
-# User variables
-source ~/.variables.zsh
-
-# User configuration
-source ~/.alias.zsh
-source ~/.riot.zsh
 
 # Load ssh identities
 zstyle :omz:plugins:ssh-agent identities id_rsa personal_id_rsa
@@ -152,20 +146,10 @@ zstyle :omz:plugins:ssh-agent identities id_rsa personal_id_rsa
 setopt extended_glob
 
 # Key Bindings
-# Map up and down arrow correctly
-if [ "${machine}" = "Mac" ]
-then
-    UPKEY='\e[A'
-    DOWNKEY='\e[B'
-else
-    UPKEY="^[OA"
-    DOWNKEY="^[OB"
-fi
+# Map up and down arrow correctly for history-substring-search-up
+bindkey '^[OA' history-substring-search-up
+bindkey '^[OB' history-substring-search-down
 
-bindkey "$UPKEY" history-substring-search-up
-bindkey "$DOWNKEY" history-substring-search-down
-
-#fzf
-source "/usr/local/opt/fzf/shell/key-bindings.zsh"
-# Workaround for Alt-C
-bindkey "ç" fzf-cd-widget
+# User Aliases
+source ~/.alias.zsh
+source ~/.riot.zsh
