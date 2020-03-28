@@ -201,15 +201,7 @@ forgit::ignore::clean() {
 FORGIT_FZF_DEFAULT_OPTS="
 $FZF_DEFAULT_OPTS
 --ansi
---height='80%'
---bind='alt-up:preview-up'
---bind='alt-down:preview-down'
---bind='ctrl-a:select-all'
---bind='ctrl-s:deselect-all'
 --bind='ctrl-r:toggle-all'
---bind='f2:toggle-sort'
---bind='?:toggle-preview'
---bind='alt-w:toggle-preview-wrap'
 --preview-window='right:60%'
 $FORGIT_FZF_DEFAULT_OPTS
 "

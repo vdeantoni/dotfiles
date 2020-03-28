@@ -1,7 +1,5 @@
 #!/usr/local/bin/zsh
 
-
-
 ln -sv "$PWD/zsh/.zshrc" ~
 ln -sv "$PWD/zsh/.fzf.zsh" ~
 ln -sv "$PWD/zsh/.p10k.zsh" ~

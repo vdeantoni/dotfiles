@@ -3,9 +3,9 @@ export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vi'
+    export EDITOR='vi'
 else
-  export EDITOR='vim'
+    export EDITOR='vim'
 fi
 
 export BAT_PAGER="less -R"
