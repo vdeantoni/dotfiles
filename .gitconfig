@@ -1,0 +1,4 @@
+[push]
+	followTags = true
+[core]
+	pager = delta --dark

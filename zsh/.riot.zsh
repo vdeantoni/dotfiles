@@ -17,3 +17,9 @@ alias reviews="open_command 'https://reviews.riotgames.com/cru?filter=outForRevi
 export JIRA_URL="https://jira.riotgames.com"
 export JIRA_NAME="vdeantoni"
 export JIRA_PREFIX="LCT"
+
+pl() {
+    set -x
+    pluginator $1 rcp-fe-lol-$2 --env ci $@[3,-1]
+    set +x
+}

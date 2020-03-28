@@ -79,6 +79,17 @@ COMPLETION_WAITING_DOTS="true"
 ZSH_ALIAS_FINDER_AUTOMATIC="true"
 
 # Which plugins would you like to load?
+# Activate zsh plugins
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+source ~/.p10k.zsh
+source ~/.fzf.zsh
+
+# iTerm2 Shell integration
+source ~/.iterm2_shell_integration.zsh
+
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -86,6 +97,8 @@ ZSH_ALIAS_FINDER_AUTOMATIC="true"
 plugins=(
     alias-finder
     brew
+    colored-man-pages
+    command-not-found
     common-aliases
     copydir
     copyfile
@@ -112,27 +125,20 @@ plugins=(
     vscode
     web-search
     z
+    zsh-interactive-cd
     zsh_reload
 
     nodenv
+    forgit
 )
 
 source $ZSH/oh-my-zsh.sh
 
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 # User variables
 source ~/.variables.zsh
 
-# Activate zsh plugins
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-fpath=(/usr/local/share/zsh-completions $fpath)
-
-source ~/.p10k.zsh
-source ~/.fzf.zsh
-
-# iTerm2 Shell integration
-source ~/.iterm2_shell_integration.zsh
 
 # User configuration
 source ~/.alias.zsh
@@ -161,3 +167,11 @@ bindkey "$DOWNKEY" history-substring-search-down
 
 # Workaround for Alt-C fzf keybinding
 bindkey "ç" fzf-cd-widget
+
+function wfxr::zle::fuzzy-emoji() {
+    BUFFER=$BUFFER$(fuzzy-emoji)
+    CURSOR=$#BUFFER
+    zle redisplay
+}
+zle -N wfxr::zle::fuzzy-emoji
+bindkey ${EMOJI_CLI_KEYBIND:='^[m'} wfxr::zle::fuzzy-emoji
