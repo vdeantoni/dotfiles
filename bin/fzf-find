@@ -1,0 +1,8 @@
+#!/usr/local/bin/zsh
+
+if [[ -v FZF_HIDE_VCS_FOLDERS ]];
+then
+    command fd --hidden --follow --exclude ".git" --exclude "node_modules" --exclude "p4" $@
+else
+    command fd  $@
+fi

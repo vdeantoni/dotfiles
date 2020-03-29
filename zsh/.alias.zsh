@@ -9,10 +9,17 @@ alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
 
 alias -g F='| fzf'
 
+# remove undesired aliases
 unalias fd
+unalias ff
 
+# helper functions
 cdwhich() {
-    cd ${$(which $1):a:h}
+    cd $(dirname $(which $1))
+}
+
+cdparent() {
+    cd $(dirname $1)
 }
 
 loop() {
