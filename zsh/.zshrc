@@ -131,6 +131,7 @@ source /usr/local/share/zsh-history-substring-search/zsh-history-substring-searc
 
 source ~/.p10k.zsh
 source ~/.fzf.zsh
+source /Users/vdeantoni/Library/Preferences/org.dystroy.broot/launcher/bash/br
 
 # iTerm2 Shell integration
 source ~/.iterm2_shell_integration.zsh

@@ -13,6 +13,7 @@ export FZF_HIDE_VCS_FOLDERS="true"
 export FZF_COMPLETION_TRIGGER='zz'
 
 export FZF_VIEW_WITH_FALLBACK='
+([[ -f {} && ($(file --mime {}) =~ image) ]] && (catimg -w 100 {})) ||
 ([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) ||
 ([[ -d {} ]] && (tree -C {} | less)) ||
 echo {}'
@@ -20,14 +21,14 @@ export FZF_VIEW_IN_FINDER='
 ([[ -d {} ]] && (echo {} | xargs open)) ||
 (echo $(dirname {}) | xargs open)'
 
-export FZF_POINTER="--prompt='~ ' --pointer='▶' --marker='✗'"
+export FZF_POINTER="--prompt='∼ ' --pointer='▶' --marker='·'"
 export FZF_MARGIN="--margin 0,0,0,0"
 
 export FZF_COLOR="
 --color='hl:148'
 --color='hl+:154'
 --color='pointer:032'
---color='marker:010'
+--color='marker:003'
 --color='bg+:237'
 --color='gutter:008'
 "
@@ -56,10 +57,10 @@ export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 export FZF_DEFAULT_OPTS="
 --no-mouse
 --layout=reverse
--0
 --info=inline
---multi
 --height=80%
+-0
+--multi
 $FZF_POINTER
 $FZF_MARGIN
 $FZF_COLOR

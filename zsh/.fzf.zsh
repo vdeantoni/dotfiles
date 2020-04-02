@@ -58,7 +58,7 @@ z() {
 # f 'echo Selected music:' --extention mp3
 # fm rm # To rm files in current directory
 f() {
-    sels=( "${(@f)$(fzf-find "${fzf-find_default[@]}" "${@:2}"| fzf)}" )
+    sels=( "${(@f)$(fd "${fd_default[@]}" "${@:2}"| fzf)}" )
     test -n "$sels" && print -z -- "$1 ${sels[@]:q:q}"
 }
 
