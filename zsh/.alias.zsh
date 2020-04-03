@@ -8,6 +8,8 @@ alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
 
 alias -g Z='| fzf'
 
+alias lg='lazygit'
+
 # remove undesired aliases
 unalias fd
 unalias ff
