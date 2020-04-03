@@ -130,11 +130,9 @@ source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 source ~/.p10k.zsh
+source ~/.iterm2.zsh
 source ~/.fzf.zsh
 source /Users/vdeantoni/Library/Preferences/org.dystroy.broot/launcher/bash/br
-
-# iTerm2 Shell integration
-source ~/.iterm2_shell_integration.zsh
 
 # zsh completions
 fpath=(/usr/local/share/zsh-completions $fpath)
