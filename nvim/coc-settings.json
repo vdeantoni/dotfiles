@@ -1,0 +1,19 @@
+{
+    "coc.preferences.formatOnSaveFiletypes": [
+        "javascript",
+        "typescript",
+        "typescriptreact",
+        "json",
+        "javascriptreact",
+        "typescript.tsx",
+        "css",
+        "scss",
+        "html",
+        "Markdown"
+    ],
+    "prettier.eslintIntegration": true,
+    "diagnostic.warningSign": "⚠️",
+    "diagnostic.errorSign": "❌",
+    "diagnostic.hintSign": "⚠️",
+    "diagnostic.infoSign": "⚠️"
+}

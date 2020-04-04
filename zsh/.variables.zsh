@@ -2,7 +2,7 @@
 export LANG=en_US.UTF-8
 
 # Preferred editor
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # bat
 export BAT_PAGER="less -R"
