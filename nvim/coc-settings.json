@@ -15,5 +15,6 @@
     "diagnostic.warningSign": "⚠️",
     "diagnostic.errorSign": "❌",
     "diagnostic.hintSign": "⚠️",
-    "diagnostic.infoSign": "⚠️"
+    "diagnostic.infoSign": "⚠️",
+    "coc.preferences.diagnostic.virtualText": true
 }

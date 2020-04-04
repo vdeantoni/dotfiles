@@ -19,6 +19,8 @@ call plug#end()
 
 "Config Section
 
+:set number
+
 " start terminal in insert mode
 au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 

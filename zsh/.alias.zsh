@@ -10,11 +10,25 @@ alias -g Z='| fzf'
 
 alias lg='lazygit'
 
+# alias v='nvim'
+# alias vim='v'
+# alias vi='v'
+
 # remove undesired aliases
 unalias fd
 unalias ff
 
 # helper functions
+classnames() {
+    local in=$1
+    if [ -z "$in" ]
+    then
+        read in;
+    fi
+
+    echo \"$(echo $in | sed 's/  / /g' | sed 's/ /", "/g')\"
+}
+
 cdwhich() {
     cd $(dirname $(which $1))
 }
