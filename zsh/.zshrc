@@ -81,6 +81,11 @@ ZSH_ALIAS_FINDER_AUTOMATIC="true"
 # User variables
 source ~/.variables.zsh
 
+# Activate zsh plugins
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -112,22 +117,16 @@ plugins=(
     ripgrep
     ssh-agent
     urltools
-    vi-mode
     vscode
     web-search
     z
     zsh_reload
 
     nodenv
-    forgit
+    zsh-vim-mode
 )
 
 source $ZSH/oh-my-zsh.sh
-
-# Activate zsh plugins
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 source ~/.p10k.zsh
 source ~/.iterm2.zsh
@@ -143,11 +142,6 @@ zstyle :omz:plugins:ssh-agent identities id_rsa personal_id_rsa
 # Zsh options
 # Set extended glob
 setopt extended_glob
-
-# Key Bindings
-# Map up and down arrow correctly for history-substring-search-up
-bindkey '^[OA' history-substring-search-up
-bindkey '^[OB' history-substring-search-down
 
 # User Aliases
 source ~/.alias.zsh

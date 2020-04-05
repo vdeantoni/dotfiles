@@ -10,9 +10,9 @@ alias -g Z='| fzf'
 
 alias lg='lazygit'
 
-# alias v='nvim'
-# alias vim='v'
-# alias vi='v'
+alias v='nvim'
+alias vim='v'
+alias vi='v'
 
 # remove undesired aliases
 unalias fd

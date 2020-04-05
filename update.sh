@@ -1,0 +1,1 @@
+git subtree pull --prefix zsh/plugins/zsh-vim-mode https://github.com/vdeantoni/zsh-vim-mode.git master --squash
