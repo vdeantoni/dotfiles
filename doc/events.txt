@@ -1,0 +1,92 @@
+# Initial prompt:
+precmd
+line-init main
+
+# Type a single letter (in viins):
+line-pre-redraw main zle-line-pre-redraw
+
+# Type <Esc> (-> vicmd):
+keymap-select vicmd main
+line-pre-redraw vicmd zle-line-pre-redraw
+
+# Type a (-> viins):
+keymap-select main vicmd
+line-pre-redraw main zle-line-pre-redraw
+
+
+# Type ^R (-> isearch from viins):
+isearch-update main
+line-pre-redraw main zle-line-pre-redraw
+
+# Type d (isearch -> update):
+history-line-set main
+isearch-update main
+line-pre-redraw main zle-line-pre-redraw
+
+# Type ^F (isearch from viins -> exit):
+isearch-exit main
+line-pre-redraw main zle-line-pre-redraw
+line-pre-redraw main zle-line-pre-redraw
+line-pre-redraw main zle-line-pre-redraw
+
+# Type <Esc> (isearch from viins -> exit FUNKY):
+keymap-select vicmd main
+isearch-update vicmd
+line-pre-redraw vicmd zle-line-pre-redraw
+
+# Type a (exit FUNKY -> exit & insert):
+isearch-exit vicmd
+line-pre-redraw vicmd zle-line-pre-redraw
+keymap-select main vicmd
+line-pre-redraw main zle-line-pre-redraw
+line-pre-redraw main zle-line-pre-redraw
+
+# Type ^C (isearch -> cancel to new prompt):
+line-pre-redraw main zle-line-pre-redraw
+
+# Type ^G (isearch viins -> cancel to found line):
+isearch-exit main
+line-pre-redraw main zle-line-pre-redraw
+line-pre-redraw main zle-line-pre-redraw
+line-pre-redraw main zle-line-pre-redraw
+
+
+
+# Type ^R (vicmd -> isearch)
+keymap-select main vicmd
+isearch-update main
+line-pre-redraw main zle-line-pre-redraw
+
+# Type a (isearch -> update):
+history-line-set main
+isearch-update main
+line-pre-redraw main zle-line-pre-redraw
+
+# Type ^F (isearch -> exit):
+isearch-exit main
+line-pre-redraw main zle-line-pre-redraw
+keymap-select vicmd main
+line-pre-redraw vicmd zle-line-pre-redraw
+line-pre-redraw vicmd zle-line-pre-redraw
+
+
+# Type <Esc> (isearch vicmd -> exit funky):
+keymap-select vicmd main
+isearch-update vicmd
+line-pre-redraw vicmd zle-line-pre-redraw
+
+# Type l (exit funky -> exit & vicmd):
+isearch-exit vicmd
+line-pre-redraw vicmd zle-line-pre-redraw
+line-pre-redraw vicmd zle-line-pre-redraw
+line-pre-redraw vicmd zle-line-pre-redraw
+
+# Type ^C (isearch vicmd -> cancel to new line):
+line-pre-redraw vicmd zle-line-pre-redraw
+
+# Type ^G (isearch vicmd -> cancel to found line):
+isearch-exit main
+line-pre-redraw main zle-line-pre-redraw
+keymap-select vicmd main
+line-pre-redraw vicmd zle-line-pre-redraw
+line-pre-redraw vicmd zle-line-pre-redraw
