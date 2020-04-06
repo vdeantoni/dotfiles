@@ -143,6 +143,10 @@ zstyle :omz:plugins:ssh-agent identities id_rsa personal_id_rsa
 # Set extended glob
 setopt extended_glob
 
+# Key bindings (require zsh-vim-mode)
+vim-mode-bindkey viins -- undo '^[z'
+vim-mode-bindkey viins -- redo '^[Z'
+
 # User Aliases
 source ~/.alias.zsh
 source ~/.riot.zsh
