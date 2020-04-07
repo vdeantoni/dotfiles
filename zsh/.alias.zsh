@@ -14,6 +14,9 @@ alias v='nvim'
 alias vim='v'
 alias vi='v'
 
+alias tolower="tr '[:upper:]' '[:lower:]'"
+alias toupper="tr '[:lower:]' '[:upper:]'"
+
 # remove undesired aliases
 unalias fd
 unalias ff

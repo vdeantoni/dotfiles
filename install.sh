@@ -15,6 +15,7 @@ ln -sv "$PWD/zsh/.zshrc" ~
 
 ln -sv "$PWD/zsh/plugins/nodenv" "$ZSH/custom/plugins"
 ln -sv "$PWD/zsh/plugins/zsh-vim-mode" "$ZSH/custom/plugins"
+ln -sv "$PWD/zsh/plugins/fast-syntax-highlighting" "$ZSH/custom/plugins"
 
 ln -sv "$PWD/bin/fzf-find" "/usr/local/bin"
 chmod 755 /usr/local/bin/fzf-find
