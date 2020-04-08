@@ -17,17 +17,20 @@ alias vi='v'
 alias tolower="tr '[:upper:]' '[:lower:]'"
 alias toupper="tr '[:lower:]' '[:upper:]'"
 
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
 # remove undesired aliases
 unalias fd
 unalias ff
 
 # helper functions
+displays() {
+    system_profiler SPDisplaysDataType
+}
+
 classnames() {
     local in=$1
-    if [ -z "$in" ]
-    then
-        read in;
-    fi
+    [[ -z "$in" ]] && read in
 
     echo \"$(echo $in | sed 's/  / /g' | sed 's/ /", "/g')\"
 }

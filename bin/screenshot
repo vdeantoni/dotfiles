@@ -1,0 +1,18 @@
+#!/usr/local/bin/zsh
+
+# [ -e ~/.alias.zsh ] && source ~/.alias.zsh
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
+local in=$1
+[[ -z "$in" ]] && read in
+
+local out=$(mktemp)
+# local width=$(( $(tput cols) ))
+# echo $width
+
+chrome --headless --screenshot=$out --window-size=1920x1080 $in &> /dev/null
+
+magick convert $out -strip sixel:-
+# magick convert $out -resize 400x400 -strip $out
+# imgcat "$out"
+# catimg -w $width $out

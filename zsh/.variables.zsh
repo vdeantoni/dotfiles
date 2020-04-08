@@ -5,7 +5,6 @@ export LANG=en_US.UTF-8
 export EDITOR='nvim'
 
 # bat
-export BAT_PAGER="less -R"
 export BAT_THEME="Monokai Extended"
 
 # fzf

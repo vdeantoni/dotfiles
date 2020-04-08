@@ -19,3 +19,9 @@ ln -sv "$PWD/zsh/plugins/fast-syntax-highlighting" "$ZSH/custom/plugins"
 
 ln -sv "$PWD/bin/fzf-find" "/usr/local/bin"
 chmod 755 /usr/local/bin/fzf-find
+
+ln -sv "$PWD/bin/imgcat" "/usr/local/bin"
+chmod 755 /usr/local/bin/imgcat
+
+ln -sv "$PWD/bin/screenshot" "/usr/local/bin"
+chmod 755 /usr/local/bin/screenshot
