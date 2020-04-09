@@ -28,6 +28,10 @@ displays() {
     system_profiler SPDisplaysDataType
 }
 
+diffstring() {
+    diff <(echo $1) <(echo $2)
+}
+
 classnames() {
     local in=$1
     [[ -z "$in" ]] && read in

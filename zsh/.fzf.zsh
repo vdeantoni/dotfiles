@@ -188,3 +188,7 @@ b() {
         | cut -d$'\t' -f2 \
         | xargs open
 }
+
+envf() {
+    printenv | awk -F'=' '/^[A-Z]+/ {print $1}' | fzf --preview 'echo ${(P)$(echo {})}'
+}

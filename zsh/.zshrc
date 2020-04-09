@@ -1,9 +1,6 @@
 # neofetch
 [ ! -e neofetch ] && neofetch
 
-# Load ssh identities
-zstyle :omz:plugins:ssh-agent identities id_rsa personal_id_rsa
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -141,6 +138,9 @@ source /Users/vdeantoni/Library/Preferences/org.dystroy.broot/launcher/bash/br
 
 # zsh completions
 fpath=(/usr/local/share/zsh-completions $fpath)
+
+# Load ssh identities
+zstyle :omz:plugins:ssh-agent identities id_rsa personal_id_rsa
 
 # Zsh options
 # Set extended glob
