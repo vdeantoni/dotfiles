@@ -20,3 +20,22 @@ pl() {
     pluginator $1 rcp-fe-lol-$2 --env ci $@[3,-1]
     set +x
 }
+
+_cpc() {
+    if [ -e $1 ]; then
+        yes | cp -vf $1 $2
+        chmod 644 $2
+    fi
+}
+
+cpc() {
+    local BASE_DIR=~/p4/depot/LoL/__MAIN__/DevRoot/Client/fe
+    local SOURCE="${BASE_DIR}/rcp-fe-lol-perks"
+    local TARGET="${BASE_DIR}/rcp-fe-lol-collections/src/lib/perks/addon"
+
+    _cpc "${SOURCE}/src/app/components/$1.js" "${TARGET}/components/$1.js"
+    _cpc "${SOURCE}/src/app/styles/components/$1.styl" "${TARGET}/styles/components/$1.styl"
+    _cpc "${SOURCE}/src/app/templates/components/$1.hbs" "${TARGET}/templates/components/$1.hbs"
+
+    echo "Done"
+}
