@@ -129,8 +129,8 @@ vim-mode-bindkey viins vicmd -- backward-char                      '^B'
 vim-mode-bindkey viins vicmd -- end-of-line                        '^E'
 vim-mode-bindkey viins vicmd -- forward-char                       '^F'
 vim-mode-bindkey viins vicmd -- kill-line                          '^K'
-vim-mode-bindkey viins vicmd -- history-incremental-pattern-search-backward '^R'
-vim-mode-bindkey viins vicmd -- history-incremental-pattern-search-forward  '^S'
+vim-mode-bindkey viins vicmd -- history-incremental-search-backward '^R'
+vim-mode-bindkey viins vicmd -- history-incremental-search-forward  '^S'
 vim-mode-bindkey viins vicmd -- backward-kill-line                 '^U'
 vim-mode-bindkey viins vicmd -- backward-kill-word                 '^W'
 vim-mode-bindkey viins vicmd -- yank                               '^Y'
@@ -177,16 +177,22 @@ vim-mode-bindkey       vicmd -- edit-command-line                  '^V'
 
 # history-substring-search {{{1
 if [[ -n $HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND ]]; then
-    vim-mode-bindkey viins vicmd -- history-substring-search-up         '^P'
-    vim-mode-bindkey viins vicmd -- history-substring-search-down       '^N'
-    vim-mode-bindkey viins vicmd -- history-substring-search-up         Up
-    vim-mode-bindkey viins vicmd -- history-substring-search-down       Down
+    vim-mode-bindkey viins vicmd -- history-substring-search-up    '^P'
+    vim-mode-bindkey viins vicmd -- history-substring-search-down  '^N'
+    vim-mode-bindkey viins vicmd -- history-substring-search-up    Up
+    vim-mode-bindkey viins vicmd -- history-substring-search-down  Down
 else
-    vim-mode-bindkey viins vicmd -- history-beginning-search-backward   '^P'
-    vim-mode-bindkey viins vicmd -- history-beginning-search-forward    '^N'
-    vim-mode-bindkey viins vicmd -- history-beginning-search-backward   Up
-    vim-mode-bindkey viins vicmd -- history-beginning-search-forward    Down
+    vim-mode-bindkey viins vicmd -- up-line-or-history             '^P'
+    vim-mode-bindkey viins vicmd -- down-line-or-history           '^N'
+    vim-mode-bindkey viins vicmd -- up-line-or-history             Up
+    vim-mode-bindkey viins vicmd -- down-line-or-history           Down
 fi
+
+# vim closing shortcuts {{{1
+exit-cmd () {exit;}
+zle -N exit-cmd
+vim-mode-bindkey       vicmd -- exit-cmd                               ZZ
+vim-mode-bindkey       vicmd -- exit-cmd                               ZQ
 
 
 # Enable surround text-objects (quotes, brackets) {{{1
@@ -452,10 +458,16 @@ vim_mode_keymap_funcs+=vim-mode-update-prompt
 # Compatibility with old variable names
 (( $+ZSH_VIM_MODE_CURSOR_VIINS )) \
     && : ${MODE_CURSOR_VIINS=ZSH_VIM_MODE_CURSOR_VIINS}
+(( $+ZSH_VIM_MODE_CURSOR_REPLACE )) \
+    && : ${MODE_CURSOR_REPLACE=ZSH_VIM_MODE_CURSOR_REPLACE}
 (( $+ZSH_VIM_MODE_CURSOR_VICMD )) \
     && : ${MODE_CURSOR_VICMD=ZSH_VIM_MODE_CURSOR_VICMD}
 (( $+ZSH_VIM_MODE_CURSOR_ISEARCH )) \
     && : ${MODE_CURSOR_SEARCH=ZSH_VIM_MODE_CURSOR_ISEARCH}
+(( $+ZSH_VIM_MODE_CURSOR_VISUAL )) \
+    && : ${MODE_CURSOR_VISUAL=ZSH_VIM_MODE_CURSOR_VISUAL}
+(( $+ZSH_VIM_MODE_CURSOR_VLINE )) \
+    && : ${MODE_CURSOR_VLINE=ZSH_VIM_MODE_CURSOR_VLINE}
 (( $+ZSH_VIM_MODE_CURSOR_DEFAULT )) \
     && : ${MODE_CURSOR_DEFAULT=ZSH_VIM_MODE_CURSOR_DEFAULT}
 
@@ -535,16 +547,24 @@ set-terminal-cursor-style() {
 vim-mode-set-cursor-style() {
     local keymap="$1"
 
-    if [[ -n $MODE_CURSOR_VICMD \
-       || -n $MODE_CURSOR_VIINS \
-       || -n $MODE_CURSOR_SEARCH ]]
+    if [[ -n $MODE_CURSOR_VIINS \
+       || -n $MODE_CURSOR_REPLACE \
+       || -n $MODE_CURSOR_VICMD \
+       || -n $MODE_CURSOR_SEARCH \
+       || -n $MODE_CURSOR_VISUAL \
+       || -n $MODE_CURSOR_VLINE \
+       ]]
     then
         case $keymap in
-            DEFAULT)      set-terminal-cursor-style ;;
-            vicmd|visual|vline)
-                          set-terminal-cursor-style ${=MODE_CURSOR_VICMD} ;;
-            isearch)      set-terminal-cursor-style ${=MODE_CURSOR_SEARCH} ;;
-            main|viins|*) set-terminal-cursor-style ${=MODE_CURSOR_VIINS} ;;
+            DEFAULT) set-terminal-cursor-style ;;
+            replace) set-terminal-cursor-style ${=MODE_CURSOR_REPLACE-$=MODE_CURSOR_VIINS} ;;
+            vicmd)   set-terminal-cursor-style ${=MODE_CURSOR_VICMD} ;;
+            isearch) set-terminal-cursor-style ${=MODE_CURSOR_SEARCH-$=MODE_CURSOR_VIINS} ;;
+            visual)  set-terminal-cursor-style ${=MODE_CURSOR_VISUAL-$=MODE_CURSOR_VIINS} ;;
+            vline)   set-terminal-cursor-style ${=MODE_CURSOR_VLINE-${=MODE_CURSOR_VISUAL-$=MODE_CURSOR_VIINS}} ;;
+
+            main|viins|*)
+                     set-terminal-cursor-style ${=MODE_CURSOR_VIINS} ;;
         esac
     fi
 }
@@ -557,7 +577,9 @@ vim-mode-cursor-finish-hook() {
     vim-mode-set-cursor-style DEFAULT
 }
 
+# See https://github.com/softmoth/zsh-vim-mode/issues/6#issuecomment-413606070
 if [[ $TERM = (dumb|linux|eterm-color) ]] || (( $+KONSOLE_PROFILE_NAME )); then
+    # Disable cursor styling on unsupported terminals
     :
 else
     vim_mode_keymap_funcs+=vim-mode-set-cursor-style
