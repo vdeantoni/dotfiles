@@ -124,6 +124,18 @@ is not modified by this plugin.
 The `$VIM_MODE_KEYMAP` variable is set to `viins`, `vicmd`, `replace`,
 `isearch`, `visual` or `vline` for easy inspection from other plugins.
 
+### Changing the initial editing mode
+
+ZSH initially is in INSERT mode (the `viins` keymap) with each new command
+prompt. If you want to always start in NORMAL mode (the `vicmd` keymap), set
+`VIM_MODE_INITIAL_KEYMAP=vicmd`. If you want to keep the mode you were in on
+the last command line, set `VIM_MODE_INITIAL_KEYMAP=last`.
+
+For example, if you type `<Esc>` to switch to NORMAL mode, then type `BBBdw`
+to go back three Words and delete a word, you are still in NORMAL mode. If
+you type `<Enter>` to submit the command, and `VIM_MODE_INITIAL_KEYMAP` is
+set to `last`, you will be placed in NORMAL mode at the next command prompt.
+
 ## Compatibility
 
 This plugin uses features added in ZSH 5.3 (`add-zle-hook-widget`, etc.).

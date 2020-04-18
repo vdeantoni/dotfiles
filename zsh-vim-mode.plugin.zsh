@@ -241,10 +241,11 @@ add-zsh-hook precmd vim-mode-precmd
 vim-mode-isearch-update   () { vim-mode-handle-event isearch-update   "$KEYMAP" }
 vim-mode-isearch-exit     () { vim-mode-handle-event isearch-exit     "$KEYMAP" }
 vim-mode-line-pre-redraw  () { vim-mode-handle-event line-pre-redraw  "$KEYMAP" }
+vim-mode-line-init        () { vim-mode-handle-event line-init        "$KEYMAP" }
 
 () {
     local w; for w in "$@"; do add-zle-hook-widget $w vim-mode-$w; done
-} isearch-exit isearch-update line-pre-redraw
+} isearch-exit isearch-update line-pre-redraw line-init
 
 typeset -g vim_mode_keymap_state=
 
@@ -255,6 +256,9 @@ vim-mode-handle-event () {
     local keymap="$2"
 
     case $hook in
+    line-init )
+        [[ $VIM_MODE_KEYMAP = vicmd ]] && zle && zle vi-cmd-mode
+        ;;
     line-pre-redraw )
         # This hook is called (maybe several times) on every action except
         # for the initial prompt drawing
@@ -304,7 +308,7 @@ vim-mode-handle-event () {
         # When the prompt is first shown line-pre-redraw does not get called
         # so the state must be initialized here
         vim_mode_keymap_state=
-        vim_mode_set_keymap viins
+        vim_mode_set_keymap $(vim-mode-initial-keymap)
         ;;
     * )
         # Should not happen
@@ -342,6 +346,20 @@ vim_mode_set_keymap () {
     done
 }
 
+vim-mode-initial-keymap () {
+    case ${VIM_MODE_INITIAL_KEYMAP:-viins} in
+        last)
+            case $VIM_MODE_KEYMAP in
+                vicmd|visual|vline) print vicmd ;;
+                *)                  print viins ;;
+            esac
+            ;;
+        vicmd)
+            print vicmd ;;
+        *)
+            print viins ;;
+    esac
+}
 
 # Editing mode indicator - Prompt string {{{1
 
@@ -570,7 +588,7 @@ vim-mode-set-cursor-style() {
 }
 
 vim-mode-cursor-init-hook() {
-    vim-mode-set-cursor-style viins
+    vim-mode-set-cursor-style $(vim-mode-initial-keymap)
 }
 
 vim-mode-cursor-finish-hook() {
