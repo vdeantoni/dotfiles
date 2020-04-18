@@ -94,6 +94,8 @@ source /usr/local/share/zsh-history-substring-search/zsh-history-substring-searc
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+    zsh-vim-mode
+
     alias-finder
     brew
     colored-man-pages
@@ -107,6 +109,7 @@ plugins=(
     ember-cli
     encode64
     extract
+    fancy-ctrl-z
     fd
     gatsby
     git
@@ -125,7 +128,6 @@ plugins=(
     zsh_reload
 
     nodenv
-    zsh-vim-mode
     fast-syntax-highlighting
 )
 

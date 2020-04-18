@@ -19,6 +19,8 @@ alias toupper="tr '[:lower:]' '[:upper:]'"
 
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
+alias '?'='google'
+
 # remove undesired aliases
 unalias fd
 unalias ff
