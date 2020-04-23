@@ -5,7 +5,7 @@ export LANG=en_US.UTF-8
 export EDITOR='nvim'
 
 # bat
-export BAT_THEME="Monokai Extended"
+export BAT_THEME="Nord"
 
 # fzf
 export FZF_HIDE_VCS_FOLDERS="true"

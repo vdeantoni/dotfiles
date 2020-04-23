@@ -1,6 +1,6 @@
 call plug#begin("~/.vim/plugged")
   " Plugin Section
-  Plug 'crusoexia/vim-monokai'
+  Plug 'arcticicestudio/nord-vim'
 
   Plug 'scrooloose/nerdtree'
   Plug 'ryanoasis/vim-devicons'
@@ -28,7 +28,8 @@ if (has("termguicolors"))
  set termguicolors
 endif
 syntax enable
-colorscheme monokai
+
+colorscheme nord
 
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1

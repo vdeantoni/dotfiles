@@ -4,6 +4,7 @@ alias gpr="ggpur"
 alias gs="gst"
 
 alias pe="path-extractor"
+
 alias brewup="brew update; brew upgrade; brew cleanup; brew doctor"
 
 alias -g Z='| fzf'
@@ -20,6 +21,8 @@ alias toupper="tr '[:lower:]' '[:upper:]'"
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
 alias '?'='google'
+
+alias shuf="rl"
 
 # remove undesired aliases
 unalias fd
