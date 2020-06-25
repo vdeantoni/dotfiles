@@ -53,7 +53,7 @@ then
     fpath+=( "${0:h}" )
 fi
 
-if [[ "$FAST_WORK_DIR" = /usr/* || ( "$FAST_WORK_DIR" = /opt/* && ! -w "$FAST_WORK_DIR" ) ]]; then
+if [[ $FAST_WORK_DIR = (/usr|/opt)/* && ! -w $FAST_WORK_DIR ]]; then
     FAST_WORK_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/fsh"
     command mkdir -p "$FAST_WORK_DIR"
 fi
@@ -372,3 +372,10 @@ if [[ ! -e $FAST_WORK_DIR/secondary_theme.zsh ]] {
     }
     touch "$FAST_WORK_DIR/secondary_theme.zsh"
 }
+
+if [[ $(uname -a) = (#i)*darwin* ]] {
+    typeset -gA FAST_HIGHLIGHT
+    FAST_HIGHLIGHT[chroma-man]=
+}
+
+[[ $COLORTERM == (24bit|truecolor) || ${terminfo[colors]} -eq 16777216 ]] || zmodload zsh/nearcolor &>/dev/null
