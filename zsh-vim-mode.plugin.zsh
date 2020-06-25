@@ -118,150 +118,151 @@ function vim-mode-bindkey () {
     done
 }
 
+if [[ -z $VIM_MODE_NO_DEFAULT_BINDINGS ]]; then
+    # Emacs-like bindings {{{1
+    vim-mode-bindkey viins vicmd -- beginning-of-line                  '^A'
+    vim-mode-bindkey viins vicmd -- backward-char                      '^B'
+    vim-mode-bindkey viins vicmd -- end-of-line                        '^E'
+    vim-mode-bindkey viins vicmd -- forward-char                       '^F'
+    vim-mode-bindkey viins vicmd -- kill-line                          '^K'
+    vim-mode-bindkey viins vicmd -- history-incremental-search-backward '^R'
+    vim-mode-bindkey viins vicmd -- history-incremental-search-forward  '^S'
+    vim-mode-bindkey viins vicmd -- backward-kill-line                 '^U'
+    vim-mode-bindkey viins vicmd -- backward-kill-word                 '^W'
+    vim-mode-bindkey viins vicmd -- yank                               '^Y'
+    vim-mode-bindkey viins vicmd -- undo                               '^_'
 
-# Emacs-like bindings {{{1
-vim-mode-bindkey viins vicmd -- beginning-of-line                  '^A'
-vim-mode-bindkey viins vicmd -- backward-char                      '^B'
-vim-mode-bindkey viins vicmd -- end-of-line                        '^E'
-vim-mode-bindkey viins vicmd -- forward-char                       '^F'
-vim-mode-bindkey viins vicmd -- kill-line                          '^K'
-vim-mode-bindkey viins vicmd -- history-incremental-search-backward '^R'
-vim-mode-bindkey viins vicmd -- history-incremental-search-forward  '^S'
-vim-mode-bindkey viins vicmd -- backward-kill-line                 '^U'
-vim-mode-bindkey viins vicmd -- backward-kill-word                 '^W'
-vim-mode-bindkey viins vicmd -- yank                               '^Y'
-vim-mode-bindkey viins vicmd -- undo                               '^_'
+    # Avoid key bindings that conflict with <Esc> entering NORMAL mode, like
+    # - common movement keys (hljk...)
+    # - common actions (dxcr...)
+    # But make this configurable: some people will never use ^[b and would
+    # rather be sure not to have a conflict, while others use it a lot and will
+    # rarely type 'b' as the first key in NORMAL mode. Which behavior shoudl win
+    # is very user-dependent.
+    vim-mode-maybe-bind() {
+        local k="$1"; shift
+        if (( $+VIM_MODE_VICMD_KEY )) \
+            || [[ ${VIM_MODE_ESC_PREFIXED_WANTED-bdf.g} = *${k}* ]];
+        then
+            vim-mode-bindkey "$@"
+        fi
+    }
 
-# Avoid key bindings that conflict with <Esc> entering NORMAL mode, like
-# - common movement keys (hljk...)
-# - common actions (dxcr...)
-# But make this configurable: some people will never use ^[b and would
-# rather be sure not to have a conflict, while others use it a lot and will
-# rarely type 'b' as the first key in NORMAL mode. Which behavior shoudl win
-# is very user-dependent.
-vim-mode-maybe-bind() {
-    local k="$1"; shift
-    if (( $+VIM_MODE_VICMD_KEY )) \
-        || [[ ${VIM_MODE_ESC_PREFIXED_WANTED-bdf.g} = *${k}* ]];
-    then
-        vim-mode-bindkey "$@"
+    vim-mode-maybe-bind b viins vicmd -- backward-word                 '^[b'
+    vim-mode-maybe-bind d viins vicmd -- kill-word                     '^[d'
+    vim-mode-maybe-bind f viins vicmd -- forward-word                  '^[f'
+    vim-mode-maybe-bind h viins       -- run-help                      '^[h'
+    # u is not likely to cause conflict, but keep it here with l
+    vim-mode-maybe-bind u viins       -- up-case-word                  '^[u'
+    vim-mode-maybe-bind l viins       -- down-case-word                '^[l'
+
+    # Some <Esc>-prefixed bindings that should rarely conflict with NORMAL mode,
+    # so always define them
+    # '.' usually comes after some other keystrokes
+    vim-mode-maybe-bind . viins vicmd -- insert-last-word              '^[.'
+    # 'g...' bindings are not commonly-used; see `bindkey -pM vicmd g`
+    vim-mode-maybe-bind g viins       -- get-line                      '^[g'
+    vim-mode-bindkey viins       -- push-line                          '^Q'
+
+    vim-mode-bindkey viins vicmd -- beginning-of-line                  Home
+    vim-mode-bindkey viins vicmd -- end-of-line                        End
+    vim-mode-bindkey viins vicmd -- backward-word                      Ctrl-Left
+    vim-mode-bindkey viins vicmd -- backward-word                      Alt-Left
+    vim-mode-bindkey viins vicmd -- forward-word                       Ctrl-Right
+    vim-mode-bindkey viins vicmd -- forward-word                       Alt-Right
+    vim-mode-bindkey viins vicmd -- up-line-or-history                 PgUp
+    vim-mode-bindkey viins vicmd -- down-line-or-history               PgDown
+
+    vim-mode-bindkey viins       -- overwrite-mode                     Insert
+    vim-mode-bindkey viins       -- delete-char                        Delete
+    vim-mode-bindkey viins       -- reverse-menu-complete              Shift-Tab
+    vim-mode-bindkey viins       -- delete-char-or-list                '^D'
+    vim-mode-bindkey viins       -- backward-delete-char               '^H'
+    vim-mode-bindkey viins       -- backward-delete-char               '^?'
+    vim-mode-bindkey viins       -- redisplay                          '^X^R'
+    vim-mode-bindkey viins       -- exchange-point-and-mark            '^X^X'
+
+    vim-mode-bindkey       vicmd -- run-help                           'H'
+    vim-mode-bindkey       vicmd -- redo                               'U'
+    vim-mode-bindkey       vicmd -- vi-yank-eol                        'Y'
+
+    autoload -U edit-command-line
+    zle -N edit-command-line
+    vim-mode-bindkey viins vicmd -- edit-command-line                  '^X^E'
+    vim-mode-bindkey       vicmd -- edit-command-line                  '^V'
+
+    if [[ -n $HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND ]]; then
+        vim-mode-bindkey viins vicmd -- history-substring-search-up    '^P'
+        vim-mode-bindkey viins vicmd -- history-substring-search-down  '^N'
+        vim-mode-bindkey viins vicmd -- history-substring-search-up    Up
+        vim-mode-bindkey viins vicmd -- history-substring-search-down  Down
+    else
+        vim-mode-bindkey viins vicmd -- up-line-or-history             '^P'
+        vim-mode-bindkey viins vicmd -- down-line-or-history           '^N'
+        vim-mode-bindkey viins vicmd -- up-line-or-history             Up
+        vim-mode-bindkey viins vicmd -- down-line-or-history           Down
     fi
-}
 
-vim-mode-maybe-bind b viins vicmd -- backward-word                 '^[b'
-vim-mode-maybe-bind d viins vicmd -- kill-word                     '^[d'
-vim-mode-maybe-bind f viins vicmd -- forward-word                  '^[f'
-vim-mode-maybe-bind h viins       -- run-help                      '^[h'
-# u is not likely to cause conflict, but keep it here with l
-vim-mode-maybe-bind u viins       -- up-case-word                  '^[u'
-vim-mode-maybe-bind l viins       -- down-case-word                '^[l'
-
-# Some <Esc>-prefixed bindings that should rarely conflict with NORMAL mode,
-# so always define them
-# '.' usually comes after some other keystrokes
-vim-mode-maybe-bind . viins vicmd -- insert-last-word              '^[.'
-# 'g...' bindings are not commonly-used; see `bindkey -pM vicmd g`
-vim-mode-maybe-bind g viins       -- get-line                      '^[g'
-vim-mode-bindkey viins       -- push-line                          '^Q'
-
-vim-mode-bindkey viins vicmd -- beginning-of-line                  Home
-vim-mode-bindkey viins vicmd -- end-of-line                        End
-vim-mode-bindkey viins vicmd -- backward-word                      Ctrl-Left
-vim-mode-bindkey viins vicmd -- backward-word                      Alt-Left
-vim-mode-bindkey viins vicmd -- forward-word                       Ctrl-Right
-vim-mode-bindkey viins vicmd -- forward-word                       Alt-Right
-vim-mode-bindkey viins vicmd -- up-line-or-history                 PgUp
-vim-mode-bindkey viins vicmd -- down-line-or-history               PgDown
-
-vim-mode-bindkey viins       -- overwrite-mode                     Insert
-vim-mode-bindkey viins       -- delete-char                        Delete
-vim-mode-bindkey viins       -- reverse-menu-complete              Shift-Tab
-vim-mode-bindkey viins       -- delete-char-or-list                '^D'
-vim-mode-bindkey viins       -- backward-delete-char               '^H'
-vim-mode-bindkey viins       -- backward-delete-char               '^?'
-vim-mode-bindkey viins       -- redisplay                          '^X^R'
-vim-mode-bindkey viins       -- exchange-point-and-mark            '^X^X'
-
-vim-mode-bindkey       vicmd -- run-help                           'H'
-vim-mode-bindkey       vicmd -- redo                               'U'
-vim-mode-bindkey       vicmd -- vi-yank-eol                        'Y'
-
-autoload -U edit-command-line
-zle -N edit-command-line
-vim-mode-bindkey viins vicmd -- edit-command-line                  '^X^E'
-vim-mode-bindkey       vicmd -- edit-command-line                  '^V'
-
-if [[ -n $HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND ]]; then
-    vim-mode-bindkey viins vicmd -- history-substring-search-up    '^P'
-    vim-mode-bindkey viins vicmd -- history-substring-search-down  '^N'
-    vim-mode-bindkey viins vicmd -- history-substring-search-up    Up
-    vim-mode-bindkey viins vicmd -- history-substring-search-down  Down
-else
-    vim-mode-bindkey viins vicmd -- up-line-or-history             '^P'
-    vim-mode-bindkey viins vicmd -- down-line-or-history           '^N'
-    vim-mode-bindkey viins vicmd -- up-line-or-history             Up
-    vim-mode-bindkey viins vicmd -- down-line-or-history           Down
-fi
-
-exit-cmd () {exit;}
-zle -N exit-cmd
-vim-mode-bindkey       vicmd -- exit-cmd                           Z Z
-vim-mode-bindkey       vicmd -- exit-cmd                           Z Q
+    exit-cmd () {exit;}
+    zle -N exit-cmd
+    vim-mode-bindkey       vicmd -- exit-cmd                           Z Z
+    vim-mode-bindkey       vicmd -- exit-cmd                           Z Q
 
 
-# Enable surround text-objects (quotes, brackets) {{{1
+    # Enable surround text-objects (quotes, brackets) {{{1
 
-autoload -U select-bracketed
-zle -N select-bracketed
-for m in visual viopp; do
-    for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
-        vim-mode-bindkey $m -- select-bracketed $c
+    autoload -U select-bracketed
+    zle -N select-bracketed
+    for m in visual viopp; do
+        for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+            vim-mode-bindkey $m -- select-bracketed $c
+        done
     done
-done
 
-autoload -U select-quoted
-zle -N select-quoted
-for m in visual viopp; do
-    for c in {a,i}{\',\",\`}; do
-        vim-mode-bindkey $m -- select-quoted $c
+    autoload -U select-quoted
+    zle -N select-quoted
+    for m in visual viopp; do
+        for c in {a,i}{\',\",\`}; do
+            vim-mode-bindkey $m -- select-quoted $c
+        done
     done
-done
 
-autoload -Uz surround
-zle -N delete-surround surround
-zle -N change-surround surround
-zle -N add-surround surround
-vim-mode-bindkey vicmd  -- change-surround cs
-vim-mode-bindkey vicmd  -- delete-surround ds
-vim-mode-bindkey vicmd  -- add-surround    ys
-vim-mode-bindkey visual -- add-surround    S
+    autoload -Uz surround
+    zle -N delete-surround surround
+    zle -N change-surround surround
+    zle -N add-surround surround
+    vim-mode-bindkey vicmd  -- change-surround cs
+    vim-mode-bindkey vicmd  -- delete-surround ds
+    vim-mode-bindkey vicmd  -- add-surround    ys
+    vim-mode-bindkey visual -- add-surround    S
 
 
-# Escape shortcut {{{1
-# From http://bewatermyfriend.org/posts/2010/08-08.21-16-02-computer.html
-#   > Copyright (c) 2010, Frank Terbeck <ft@bewatermyfriend.org>
-#   > The same licensing terms as with zsh apply.
-if (( $+VIM_MODE_VICMD_KEY )); then
-    vim-mode-bindkey viins -- vi-cmd-mode "$VIM_MODE_VICMD_KEY"
+    # Escape shortcut {{{1
+    # From http://bewatermyfriend.org/posts/2010/08-08.21-16-02-computer.html
+    #   > Copyright (c) 2010, Frank Terbeck <ft@bewatermyfriend.org>
+    #   > The same licensing terms as with zsh apply.
+    if (( $+VIM_MODE_VICMD_KEY )); then
+        vim-mode-bindkey viins -- vi-cmd-mode "$VIM_MODE_VICMD_KEY"
 
-    case $VIM_MODE_VICMD_KEY in
-        ^[Dd] )
-            builtin set -o ignore_eof
-            vim-mode-bindkey vicmd -- vim-mode-accept-or-eof "$VIM_MODE_VICMD_KEY"
+        case $VIM_MODE_VICMD_KEY in
+            ^[Dd] )
+                builtin set -o ignore_eof
+                vim-mode-bindkey vicmd -- vim-mode-accept-or-eof "$VIM_MODE_VICMD_KEY"
 
-            function vim-mode-accept-or-eof() {
-                if [[ $#BUFFER = 0 ]]; then
-                    exit
-                else
-                    zle accept-line
-                fi
-            }
-            zle -N vim-mode-accept-or-eof
-            ;;
-    esac
+                function vim-mode-accept-or-eof() {
+                    if [[ $#BUFFER = 0 ]]; then
+                        exit
+                    else
+                        zle accept-line
+                    fi
+                }
+                zle -N vim-mode-accept-or-eof
+                ;;
+        esac
+    fi
+
+    unfunction vim-mode-maybe-bind
 fi
-
-unfunction vim-mode-maybe-bind
 
 # Identifying the editing mode {{{1
 
