@@ -115,6 +115,15 @@ works in both the shell and editor.
 inoremap <C-d> <Esc>
 ```
 
+=== Disabling default keybindings
+
+Out of the box, various common keybindings for vim mode are defined. If this 
+does not suit your purposes, you can disable them easily:
+
+```
+VIM_MODE_NO_DEFAULT_BINDINGS=true
+```
+
 == Editing keymap tracking
 
 This plugin carefully tracks the editing mode state in order to provide
