@@ -267,6 +267,10 @@ fi
 # Identifying the editing mode {{{1
 
 if [[ $VIM_MODE_TRACK_KEYMAP != no ]]; then
+    # Export the main variable so higher-level processes can view it;
+    # e.g., github:starship/starship uses this
+    export VIM_MODE_KEYMAP
+
     autoload -Uz add-zsh-hook
     autoload -Uz add-zle-hook-widget
 
