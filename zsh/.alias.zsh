@@ -44,6 +44,13 @@ classnames() {
     echo \"$(echo $in | sed 's/  / /g' | sed 's/ /", "/g')\"
 }
 
+cn() {
+    local in=$1
+    [[ -z "$in" ]] && read in
+
+    classnames $1 | pbcopy
+}
+
 cdwhich() {
     cd $(dirname $(which $1))
 }
