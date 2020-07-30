@@ -13,7 +13,9 @@ alias reviews="open_command 'https://reviews.riotgames.com/cru?filter=outForRevi
 # Jira config
 export JIRA_URL="https://jira.riotgames.com"
 export JIRA_NAME="vdeantoni"
-export JIRA_PREFIX="LCT"
+export JIRA_PREFIX=""
+export JIRA_RAPID_BOARD="true"
+export JIRA_DEFAULT_ACTION="dashboard"
 
 pl() {
     set -x
