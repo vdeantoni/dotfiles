@@ -136,7 +136,6 @@ source $ZSH/oh-my-zsh.sh
 source ~/.p10k.zsh
 source ~/.iterm2.zsh
 source ~/.fzf.zsh
-source /Users/vdeantoni/Library/Preferences/org.dystroy.broot/launcher/bash/br
 
 # zsh completions
 fpath=(/usr/local/share/zsh-completions $fpath)

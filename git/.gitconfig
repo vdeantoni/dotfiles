@@ -2,3 +2,5 @@
 	followTags = true
 [core]
 	pager = delta --dark
+[user]
+	name = Vinicius De Antoni
