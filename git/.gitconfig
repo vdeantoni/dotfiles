@@ -4,3 +4,10 @@
 	pager = delta --dark
 [user]
 	name = Vinicius De Antoni
+	email = vdeantoni@apple.com
+[diff]
+	tool = bc3
+[merge]
+	tool = bc3
+[mergetool "bc3"]
+	trustExitCode = true

@@ -115,12 +115,13 @@ plugins=(
     git
     jira
     jsontools
+    kubectl
     node
     npm
     npx
     osx
     ripgrep
-    ssh-agent
+    # ssh-agent
     urltools
     vscode
     web-search
@@ -141,7 +142,7 @@ source ~/.fzf.zsh
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # Load ssh identities
-zstyle :omz:plugins:ssh-agent identities id_rsa personal_id_rsa
+# zstyle :omz:plugins:ssh-agent identities id_rsa apple_id_rsa
 
 # Zsh options
 # Set extended glob
@@ -153,4 +154,4 @@ vim-mode-bindkey viins -- redo '^[Z'
 
 # User Aliases
 source ~/.alias.zsh
-source ~/.riot.zsh
+source ~/.apple.zsh
