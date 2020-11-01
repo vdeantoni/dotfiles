@@ -1,5 +1,6 @@
 [push]
 	followTags = true
+	default = current
 [core]
 	pager = delta --dark
 [user]
