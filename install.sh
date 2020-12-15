@@ -2,6 +2,8 @@
 
 ln -sv "$PWD/git/.gitconfig" ~
 
+ln -sv "$PWD/lazygit/config.yml" ~/Library/Application\ Support/jesseduffield/lazygit
+
 ln -sv "$PWD/zsh/.alias.zsh" ~
 ln -sv "$PWD/zsh/.fzf.zsh" ~
 ln -sv "$PWD/zsh/.iterm2.zsh" ~

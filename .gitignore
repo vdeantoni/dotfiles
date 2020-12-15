@@ -1,2 +1,4 @@
 .DS_Store
+.idea
+.vscode
 zsh/.apple.zsh

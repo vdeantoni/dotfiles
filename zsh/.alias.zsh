@@ -25,7 +25,6 @@ alias '?'='google'
 alias shuf="rl"
 
 # remove undesired aliases
-unalias fd
 unalias ff
 
 # helper functions

@@ -2,7 +2,9 @@
 	followTags = true
 	default = current
 [core]
-	pager = delta --dark
+	pager = delta --dark --line-numbers
+[interactive]
+    diffFilter = delta --color-only
 [user]
 	name = Vinicius De Antoni
 	email = vdeantoni@apple.com
