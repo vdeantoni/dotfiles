@@ -142,12 +142,14 @@ if [[ -z $VIM_MODE_NO_DEFAULT_BINDINGS ]]; then
     vim-mode-maybe-bind() {
         local k="$1"; shift
         if (( $+VIM_MODE_VICMD_KEY )) \
-            || [[ ${VIM_MODE_ESC_PREFIXED_WANTED-bdf.g} = *${k}* ]];
+            || [[ ${VIM_MODE_ESC_PREFIXED_WANTED-^?^Hbdf.g} = *${k}* ]];
         then
             vim-mode-bindkey "$@"
         fi
     }
 
+    vim-mode-maybe-bind '^?' viins vicmd -- backward-kill-word         '^[^?'
+    vim-mode-maybe-bind '^H' viins vicmd -- backward-kill-word         '^[^H'
     vim-mode-maybe-bind b viins vicmd -- backward-word                 '^[b'
     vim-mode-maybe-bind d viins vicmd -- kill-word                     '^[d'
     vim-mode-maybe-bind f viins vicmd -- forward-word                  '^[f'
@@ -197,10 +199,20 @@ if [[ -z $VIM_MODE_NO_DEFAULT_BINDINGS ]]; then
         vim-mode-bindkey viins vicmd -- history-substring-search-up    Up
         vim-mode-bindkey viins vicmd -- history-substring-search-down  Down
     else
-        vim-mode-bindkey viins vicmd -- up-line-or-history             '^P'
-        vim-mode-bindkey viins vicmd -- down-line-or-history           '^N'
-        vim-mode-bindkey viins vicmd -- up-line-or-history             Up
-        vim-mode-bindkey viins vicmd -- down-line-or-history           Down
+        autoload -Uz history-search-end
+        zle -N history-beginning-search-backward-end history-search-end
+        zle -N history-beginning-search-forward-end history-search-end
+
+        vim-mode-bindkey viins vicmd -- history-beginning-search-backward-end '^P'
+        vim-mode-bindkey viins vicmd -- history-beginning-search-forward-end  '^N'
+        vim-mode-bindkey viins vicmd -- history-beginning-search-backward-end Up
+        vim-mode-bindkey viins vicmd -- history-beginning-search-forward-end  Down
+    fi
+
+    # Compatibility with zsh-autosuggestions; see issue #25
+    if zle -la up-line-or-beginning-search; then
+        vim-mode-bindkey       vicmd -- down-line-or-beginning-search  j
+        vim-mode-bindkey       vicmd -- up-line-or-beginning-search    k
     fi
 
     exit-cmd () {exit;}
@@ -300,6 +312,7 @@ if [[ $VIM_MODE_TRACK_KEYMAP != no ]]; then
 
         local hook="$1"
         local keymap="$2"
+        rc=0  # Assume we'll succeed
 
         case $hook in
         line-init )
@@ -359,8 +372,11 @@ if [[ $VIM_MODE_TRACK_KEYMAP != no ]]; then
         * )
             # Should not happen
             zle && zle -M "zsh-vim-mode internal error: bad hook $hook"
+            rc=1  # Oops
             ;;
         esac
+
+        return $rc
     }
 
     vim_mode_set_keymap () {
@@ -627,6 +643,9 @@ if [[ $VIM_MODE_TRACK_KEYMAP != no ]]; then
                          set-terminal-cursor-style ${=MODE_CURSOR_VIINS} ;;
             esac
         fi
+
+        # Success
+        return 0
     }
 
     vim-mode-cursor-init-hook() {
