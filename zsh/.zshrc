@@ -15,7 +15,7 @@ fi
 export ZSH="/Users/vdeantoni/.oh-my-zsh"
 
 # Custom PATHs
-export PATH="/usr/local/opt/libpq/bin:$PATH"
+export PATH="/usr/local/sbin:/usr/local/opt/libpq/bin:$PATH"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
