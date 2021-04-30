@@ -7,6 +7,7 @@ Friendly bindings for ZSH's vi mode
 
 == Installation
 :zshplugmgr: https://github.com/unixorn/awesome-zsh-plugins/blob/master/README.md#installation
+:issue-8: https://github.com/softmoth/zsh-vim-mode/issues/8
 
 Install this plugin with any {zshplugmgr}[ZSH plugin manager], or just
 source it from your `.zshrc`:
@@ -14,6 +15,15 @@ source it from your `.zshrc`:
 ```
 # In .zshrc
 source "$HOME/zsh-vim-mode/zsh-vim-mode.plugin.zsh"
+```
+
+To {issue-8}[avoid conflicts], load these plugins in the following order if you use
+them:
+
+```
+zsh-autosuggestions
+zsh-syntax-highlighting
+zsh-vim-mode
 ```
 
 == Additional key bindings
@@ -68,7 +78,7 @@ with switching to NORMAL mode. You can configure which bindings it adds:
 ```zsh
 # Put this in .zshrc, before this plugin is loaded
 # Enable <Esc>-prefixed bindings that should rarely conflict with NORMAL mode
-VIM_MODE_ESC_PREFIXED_WANTED='bdfhul.g'  # Default is 'bdf.g'
+VIM_MODE_ESC_PREFIXED_WANTED='^?^Hbdfhul.g'  # Default is '^?^Hbdf.g'
 ```
 
 Please open an issue if you run find a conflicting binding you can not turn
@@ -114,6 +124,13 @@ works in both the shell and editor.
 " Use Control-D instead of Escape to switch to NORMAL mode
 inoremap <C-d> <Esc>
 ```
+
+==== Wrap conflicting bindings with disambiguation widgets
+:issue-33: https://github.com/softmoth/zsh-vim-mode/issues/33
+
+A hack is provided in {issue-33}[issue #33] to use surrounds while keeping
+`KEYTIMEOUT=1`. The code can simply be copied into `.zshrc` after loading
+this module.
 
 === Disabling default keybindings
 
