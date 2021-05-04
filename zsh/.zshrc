@@ -129,6 +129,7 @@ plugins=(
     web-search
     z
     zsh_reload
+    gh
 
     nodenv
     fast-syntax-highlighting
