@@ -88,6 +88,7 @@ source ~/.variables.zsh
 
 # Activate zsh plugins
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 # Which plugins would you like to load?
@@ -132,7 +133,6 @@ plugins=(
     gh
 
     nodenv
-    fast-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -158,3 +158,9 @@ vim-mode-bindkey viins -- redo '^[Z'
 # User Aliases
 source ~/.alias.zsh
 source ~/.apple.zsh
+
+#### FIG ENV VARIABLES ####
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
+
+
